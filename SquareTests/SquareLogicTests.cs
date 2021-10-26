@@ -63,13 +63,13 @@ namespace Square.Tests
         {
             SquareLogic square;
 
-            square = new SquareLogic(1000, MeasureType.m2);
+            square = new SquareLogic(10000, MeasureType.m2);
             Assert.AreEqual("1 га.", square.To(MeasureType.га).Verbose());
 
-            square = new SquareLogic(149597870700 * 2, MeasureType.m2);
+            square = new SquareLogic(100 * 2, MeasureType.m2);
             Assert.AreEqual("2 а.", square.To(MeasureType.а).Verbose());
 
-            square = new SquareLogic(3 * 3.0856776 * Math.Pow(10, 16), MeasureType.m2);
+            square = new SquareLogic(3 * 10925, MeasureType.m2);
             Assert.AreEqual("3 д.", square.To(MeasureType.д).Verbose());
         }
         [TestMethod()]
@@ -78,13 +78,13 @@ namespace Square.Tests
             SquareLogic square;
 
             square = new SquareLogic(1, MeasureType.га);
-            Assert.AreEqual("1000 m2.", square.To(MeasureType.m2).Verbose());
+            Assert.AreEqual("10000 m2.", square.To(MeasureType.m2).Verbose());
 
             square = new SquareLogic(1, MeasureType.а);
-            Assert.AreEqual("149597870700 m2.", square.To(MeasureType.m2).Verbose());
+            Assert.AreEqual("100 m2.", square.To(MeasureType.m2).Verbose());
 
             square = new SquareLogic(1, MeasureType.д);
-            Assert.AreEqual("3,0856776E+16 m2.", square.To(MeasureType.m2).Verbose());
+            Assert.AreEqual("10925 m2.", square.To(MeasureType.m2).Verbose());
         }
         [TestMethod()]
         public void AddSubKmMetersTest()
@@ -92,11 +92,11 @@ namespace Square.Tests
             var m2 = new SquareLogic(100, MeasureType.m2);
             var ga = new SquareLogic(1, MeasureType.га);
 
-            Assert.AreEqual("1100 m2.", (m2 + ga).Verbose());
-            Assert.AreEqual("1,1 га.", (ga + m2).Verbose());
+            Assert.AreEqual("10100 m2.", (m2 + ga).Verbose());
+            Assert.AreEqual("1,01 га.", (ga + m2).Verbose());
 
-            Assert.AreEqual("0,9 га.", (ga - m2).Verbose());
-            Assert.AreEqual("-900 m2.", (m2 - ga).Verbose());
+            Assert.AreEqual("0,99 га.", (ga - m2).Verbose());
+            Assert.AreEqual("-9900 m2.", (m2 - ga).Verbose());
         }
     }
 }

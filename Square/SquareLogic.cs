@@ -18,6 +18,21 @@ namespace Square
             this.value = value;
             this.type = type;
         }
+
+        public double Value
+        {
+            get
+            {
+                return value;
+            }
+        }
+        public MeasureType Type
+        {
+            get
+            {
+                return type;
+            }
+        }
         public string Verbose()
         {
             string typeVerbose = "";
@@ -103,15 +118,15 @@ namespace Square
                         break;
                     // если в га.
                     case MeasureType.га:
-                        newValue = this.value / 1000;
+                        newValue = this.value / 10000;
                         break;
                     // если в  а.
                     case MeasureType.а:
-                        newValue = this.value / 149597870700;
+                        newValue = this.value / 100;
                         break;
                     // если в десятину
                     case MeasureType.д:
-                        newValue = this.value / (3.0856776 * Math.Pow(10, 16));
+                        newValue = this.value / 10925;
                         break;
                 }
             }
@@ -123,13 +138,13 @@ namespace Square
                         newValue = this.value;
                         break;
                     case MeasureType.га:
-                        newValue = this.value * 1000; // кстати это то же код что и выше, только / заменили на *
+                        newValue = this.value * 10000; // кстати это то же код что и выше, только / заменили на *
                         break;
                     case MeasureType.а:
-                        newValue = this.value * 149597870700; // и тут / на *
+                        newValue = this.value * 100; // и тут / на *
                         break;
                     case MeasureType.д:
-                        newValue = this.value * (3.0856776 * Math.Pow(10, 16)); // и даже тут, просто / на *
+                        newValue = this.value * 10925; // и даже тут, просто / на *
                         break;
                 }
             }
@@ -156,6 +171,24 @@ namespace Square
         {
             // тут все тоже, только с минусом
             return instance1 - instance2.To(instance1.type).value;
+        }
+
+        public static SquareLogic operator *(SquareLogic instance1, SquareLogic instance2)
+        {
+            
+            return instance1 * instance2.To(instance1.type).value;
+        }
+
+
+
+         public static bool operator >(SquareLogic first, SquareLogic second)
+         {
+
+             return first.value > second.To(first.type).value;
+         }
+         public static bool operator <(SquareLogic first, SquareLogic second)
+         {
+             return first.value < second.To(first.type).value;
         }
     }
 

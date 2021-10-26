@@ -27,6 +27,8 @@ namespace Square
             cmbFirstType.DataSource = new List<string>(measureItems);
             cmbSecondType.DataSource = new List<string>(measureItems);
             cmbResultType.DataSource = new List<string>(measureItems);
+            cmbThirdType.DataSource = new List<string>(measureItems);
+            cmbResultType2.DataSource = new List<string>(measureItems);
         }
         private MeasureType GetMeasureType(ComboBox comboBox)
         {
@@ -68,6 +70,7 @@ namespace Square
                 var firstLength = new SquareLogic(firstValue, firstType);
                 var secondLength = new SquareLogic(secondValue, secondType);
 
+
                 SquareLogic sumLength;
 
                 switch (cmbOperation.Text)
@@ -77,17 +80,63 @@ namespace Square
                         break;
                     case "-":
                         sumLength = firstLength - secondLength;
+                        break;                
+                    default:
+                        sumLength = new SquareLogic(0, MeasureType.m2);
                         break;
-                    // case "*":
-                    // sumLength = firstLength * secondLength;
-                    // break;
+                }
+                if (new SquareLogic(firstLength.Value, firstType) < new SquareLogic(secondLength.Value, secondType))
+                {
+                    txtResult3.Text = "Меньше";
+                }
+                else if (new SquareLogic(firstLength.Value, firstType) > new SquareLogic(secondLength.Value, secondType))
+                {
+                    txtResult3.Text = "Больше";
+                }
+                else
+                {
+                    txtResult3.Text = "Равно";
+                }
+
+                // тут конвертируем через To(resultType) в указанный тип
+                txtResult.Text = sumLength.To(resultType).Verbose();
+            }
+            catch (FormatException)
+            {
+                // если тип преобразовать не смогли
+            }
+        }
+
+        private void Calculate2()
+        {
+            try
+            {
+                var firstValue = double.Parse(txtThird.Text);
+                var secondValue = double.Parse(txtFourth.Text);
+
+                // вместо трех страшных свитчей, три вызова нашей новой функции
+                MeasureType firstType = GetMeasureType(cmbThirdType);
+              //  MeasureType secondType = GetMeasureType(cmbSecondType);
+                MeasureType resultType = GetMeasureType(cmbResultType2);
+
+                // тут сразу тип полученный передаем в момент создания экземпляра класса
+                var firstLength = new SquareLogic(firstValue, firstType);
+              //  var secondLength = new SquareLogic(secondValue, secondType);
+
+                SquareLogic sumLength;
+
+                switch (cmbOperation2.Text)
+                {
+                     case "*":
+                        sumLength = firstLength * secondValue;
+                        break;
                     default:
                         sumLength = new SquareLogic(0, MeasureType.m2);
                         break;
                 }
 
                 // тут конвертируем через To(resultType) в указанный тип
-                txtResult.Text = sumLength.To(resultType).Verbose();
+                txtResult2.Text = sumLength.To(resultType).Verbose();
             }
             catch (FormatException)
             {
@@ -99,5 +148,12 @@ namespace Square
             // вызов функции все тот же
             Calculate();
         }
+
+        private void onValueChanged2(object sender, EventArgs e)
+        {
+            // вызов функции все тот же
+            Calculate2();
+        }
+
     }
 }
