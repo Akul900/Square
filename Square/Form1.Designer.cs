@@ -55,10 +55,10 @@ namespace Square
             this.cmbOperation.Items.AddRange(new object[] {
             "+",
             "-",
-            "*"});
+            "Сравнение"});
             this.cmbOperation.Location = new System.Drawing.Point(182, 27);
             this.cmbOperation.Name = "cmbOperation";
-            this.cmbOperation.Size = new System.Drawing.Size(87, 24);
+            this.cmbOperation.Size = new System.Drawing.Size(116, 24);
             this.cmbOperation.TabIndex = 0;
             this.cmbOperation.Text = "+";
             this.cmbOperation.SelectedIndexChanged += new System.EventHandler(this.onValueChanged);
@@ -73,7 +73,7 @@ namespace Square
             // 
             // txtSecond
             // 
-            this.txtSecond.Location = new System.Drawing.Point(275, 29);
+            this.txtSecond.Location = new System.Drawing.Point(304, 29);
             this.txtSecond.Name = "txtSecond";
             this.txtSecond.Size = new System.Drawing.Size(100, 22);
             this.txtSecond.TabIndex = 2;
@@ -107,7 +107,7 @@ namespace Square
             // cmbSecondType
             // 
             this.cmbSecondType.FormattingEnabled = true;
-            this.cmbSecondType.Location = new System.Drawing.Point(381, 27);
+            this.cmbSecondType.Location = new System.Drawing.Point(410, 29);
             this.cmbSecondType.Name = "cmbSecondType";
             this.cmbSecondType.Size = new System.Drawing.Size(50, 24);
             this.cmbSecondType.TabIndex = 6;
@@ -171,7 +171,7 @@ namespace Square
             // 
             this.txtResult3.Location = new System.Drawing.Point(157, 111);
             this.txtResult3.Name = "txtResult3";
-            this.txtResult3.Size = new System.Drawing.Size(100, 22);
+            this.txtResult3.Size = new System.Drawing.Size(156, 22);
             this.txtResult3.TabIndex = 13;
             // 
             // label1

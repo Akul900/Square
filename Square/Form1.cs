@@ -67,8 +67,8 @@ namespace Square
                 MeasureType resultType = GetMeasureType(cmbResultType);
 
                 // тут сразу тип полученный передаем в момент создания экземпляра класса
-                var firstLength = new SquareLogic(firstValue, firstType);
-                var secondLength = new SquareLogic(secondValue, secondType);
+                var firstSquare = new SquareLogic(firstValue, firstType);
+                var secondSquare = new SquareLogic(secondValue, secondType);
 
 
                 SquareLogic sumLength;
@@ -76,31 +76,42 @@ namespace Square
                 switch (cmbOperation.Text)
                 {
                     case "+":
-                        sumLength = firstLength + secondLength;
+                        sumLength = firstSquare + secondSquare;
+                        txtResult3.Text = "";
                         break;
                     case "-":
-                        sumLength = firstLength - secondLength;
-                        break;                
-                    default:
+                        sumLength = firstSquare - secondSquare;
+                        txtResult3.Text = "";
+                        break;
+                    case "Сравнение":
+                      
+                      if (firstSquare < secondSquare)
+                        {
+                            txtResult3.Text = "Первое меньше";
+                        }
+                  
+                      else if (firstSquare > secondSquare)
+                        {
+                            txtResult3.Text = "Первое больше";
+                        }
+                        else
+                        {
+                            txtResult3.Text = "Равно";
+                        }
                         sumLength = new SquareLogic(0, MeasureType.m2);
                         break;
+                    default:
+                        sumLength = new SquareLogic(0, MeasureType.m2);
+                        txtResult3.Text = "";
+                        break;
                 }
-                if (new SquareLogic(firstLength.Value, firstType) < new SquareLogic(secondLength.Value, secondType))
-                {
-                    txtResult3.Text = "Меньше";
-                }
-                else if (new SquareLogic(firstLength.Value, firstType) > new SquareLogic(secondLength.Value, secondType))
-                {
-                    txtResult3.Text = "Больше";
-                }
-                else
-                {
-                    txtResult3.Text = "Равно";
-                }
+
 
                 // тут конвертируем через To(resultType) в указанный тип
                 txtResult.Text = sumLength.To(resultType).Verbose();
+               // txtResult.Text = sumLength.To(resultType).Verbose();
             }
+
             catch (FormatException)
             {
                 // если тип преобразовать не смогли
@@ -120,7 +131,7 @@ namespace Square
                 MeasureType resultType = GetMeasureType(cmbResultType2);
 
                 // тут сразу тип полученный передаем в момент создания экземпляра класса
-                var firstLength = new SquareLogic(firstValue, firstType);
+                var firstSquare = new SquareLogic(firstValue, firstType);
               //  var secondLength = new SquareLogic(secondValue, secondType);
 
                 SquareLogic sumLength;
@@ -128,7 +139,7 @@ namespace Square
                 switch (cmbOperation2.Text)
                 {
                      case "*":
-                        sumLength = firstLength * secondValue;
+                        sumLength = firstSquare * secondValue;
                         break;
                     default:
                         sumLength = new SquareLogic(0, MeasureType.m2);

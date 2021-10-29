@@ -14,48 +14,19 @@ namespace Square
         private MeasureType type;
 
         public SquareLogic(double value, MeasureType type)
+        //метод, который будет выводить нам значение в читаемом виде
         {
             this.value = value;
             this.type = type;
         }
-
-        public double Value
+     
+        public string Verbose()   // выводит результат
         {
-            get
-            {
-                return value;
-            }
-        }
-        public MeasureType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
-        public string Verbose()
-        {
-            string typeVerbose = "";
-            switch (this.type)
-            {
-                case MeasureType.m2:
-                    typeVerbose = "m2.";
-                    break;
-                case MeasureType.га:
-                    typeVerbose = "га.";
-                    break;
-                case MeasureType.а:
-                    typeVerbose = "а.";
-                    break;
-                case MeasureType.д:
-                    typeVerbose = "д.";
-                    break;
-            }
-            return String.Format("{0} {1}", this.value, typeVerbose);
+            return String.Format("{0} {1}", this.value, "");
         }
         public static SquareLogic operator +(SquareLogic instance, double number)
         {
-            // расчитываем новую значение
+            // рассчитываем новое значение
             var newValue = instance.value + number;
             // создаем новый экземпляр класса, с новый значением и типом как у меры, к которой число добавляем
             var square = new SquareLogic(newValue, instance.type);
@@ -66,13 +37,12 @@ namespace Square
         // чтобы можно было добавлять число также слева
         public static SquareLogic operator +(double number, SquareLogic instance)
         {
-            // вызываем с правильным порядком аргументов, то есть сначала длина потом число
+            // вызываем с правильным порядком аргументов, то есть сначала площадь потом число
             // для такого порядка мы определили оператор выше
             return instance + number;
         }
         public static SquareLogic operator *(SquareLogic instance, double number)
         {
-            // мне лень по три строчки писать, поэтому я сокращаю код до одной строки
             return new SquareLogic(instance.value * number, instance.type); ;
         }
 
@@ -92,21 +62,11 @@ namespace Square
             return instance - number;
         }
 
-        // деление
-        public static SquareLogic operator /(SquareLogic instance, double number)
-        {
-            return new SquareLogic(instance.value / number, instance.type); ;
-        }
-
-        public static SquareLogic operator /(double number, SquareLogic instance)
-        {
-            return instance / number;
-        }
         public SquareLogic To(MeasureType newType)
         {
             // по умолчанию новое значение совпадает со старым
             var newValue = this.value;
-            // если текущий тип -- это метр
+            // если текущий тип -- это метр2
             if (this.type == MeasureType.m2)
             {
                 // а теперь рассматриваем все другие ситуации
@@ -130,7 +90,7 @@ namespace Square
                         break;
                 }
             }
-            else if (newType == MeasureType.m2) // если новый тип: метр
+            else if (newType == MeasureType.m2) // если новый тип: метр2
             {
                 switch (this.type) // а тут уже старый тип проверяем
                 {
@@ -138,38 +98,34 @@ namespace Square
                         newValue = this.value;
                         break;
                     case MeasureType.га:
-                        newValue = this.value * 10000; // кстати это то же код что и выше, только / заменили на *
+                        newValue = this.value * 10000; 
                         break;
                     case MeasureType.а:
-                        newValue = this.value * 100; // и тут / на *
+                        newValue = this.value * 100; 
                         break;
                     case MeasureType.д:
-                        newValue = this.value * 10925; // и даже тут, просто / на *
+                        newValue = this.value * 10925; 
                         break;
                 }
             }
-            else // то есть не в метр и не из метра
+            else // то есть не в метр2 и не из метр2
             {
                 newValue = this.To(MeasureType.m2).To(newType).value;
-                // в принципе можно сразу написать 
-                // return this.To(MeasureType.m).To(newType);
-                // но хорошем тоном считается наличие всего одного return в функции
             }
             return new SquareLogic(newValue, newType);
         }
         public static SquareLogic operator +(SquareLogic instance1, SquareLogic instance2)
         {
-            // то есть у текущей длине добавляем число 
-            // полученное преобразованием значения второй длины в тип первой длины
-            // так как у нас определен operator+(Length instance, double number)
+            // то есть к текущей площади добавляем число 
+            // полученное преобразованием значения второй площади в тип первой площади
+            // так как у нас определен operator+(SquareLogic instance, double number)
             // то это сработает как ожидается
             return instance1 + instance2.To(instance1.type).value;
         }
 
-        // вычитание двух длин
+        // вычитание двух площадей
         public static SquareLogic operator -(SquareLogic instance1, SquareLogic instance2)
         {
-            // тут все тоже, только с минусом
             return instance1 - instance2.To(instance1.type).value;
         }
 
